@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String   @id @default(uuid())
+  username String 
+  password String
+  accessToken String? @unique
+  email    String @unique
+  shopCred ShopCred?
+  product Product[]
+}
+
+model ShopCred {
+  id                 String @id @default(uuid())
+  userId             String @unique
+  shopifyAccessToken String?
+  shopifyShopName    String?
+  wooCommerceUrl     String?
+  wooCommerceConsumerSecret  String?
+  wooCommerceConsumerKey String?
+  connectedWith      Store[]
+  user               User   @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id                Int       @id @default(autoincrement())
+  WooCommerceId        String? @unique
+  WoocommerceInventoryId String?
+  ShopifyId           String?     @unique// Can be used for WooCommerceId or ShopifyId
+  shopifyInventoryId  String?
+
+  platform          Store[]   // Either "woocommerce" or "shopify"
+  name              String    // Common field (name in WooCommerce, title in Shopify)
+  description       String    // Common field (description in WooCommerce, bodyHtml in Shopify)
+  shortDescription  String?   // WooCommerce specific
+  status            String    // Common field
+  featured          Boolean?  // WooCommerce specific
+  sku               String?   // Common field
+  price             String     // Common field
+  regularPrice      String?    // Common field
+  salePrice         String?    // Common field
+  onSale            Boolean   // Common field
+  purchasable       Boolean?  // WooCommerce specific
+  manageStock       Boolean   // Common field
+  stockQuantity     String?      // Common field
+  image              String?
+  images              String[]
+  userId String
+  user               User   @relation(fields: [userId], references: [id])
+}
+
+
+
+enum Store {
+  Shopify
+  WooCommerce
+  Others
+  Nothing
+}

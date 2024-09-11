@@ -1,0 +1,15 @@
+{
+  "name": "Organic Cotton T-Shirt form Mathesh",
+  "on_sale": false,
+  "purchasable": true,
+  "description": "This is a 100% organic cotton t-shirt, soft and comfortable.",
+  "short_description": "Soft and comfy organic t-shirt.",
+  "stock_quantity": null,
+  "sku": "",
+  "price": "29.99",
+  "images": [
+    {
+      "src": "https://staging3.vaseegrahveda.ae/wp-content/uploads/2024/09/vaseegrah-2.png"
+    }
+  ]
+}
